@@ -46,10 +46,18 @@ appendCSVLiteral(StringInfo buf, const char *data)
 		return;
 
 	appendStringInfoCharMacro(buf, '"');
-	while ((c = *p++) != '\0')
+	while ((c = *p++) != '\0')  /* escape character '"' and  character  '\'  */
 	{
+		/* escape character '"'   */
 		if (c == '"')
-			appendStringInfoCharMacro(buf, '"');
+		{
+			appendStringInfoCharMacro(buf, '\\');
+		}
+		/* escape character '\' */
+		if(c == '\\')
+		{
+			appendStringInfoCharMacro(buf, '\\');
+		}
 		appendStringInfoCharMacro(buf, c);
 	}
 	appendStringInfoCharMacro(buf, '"');
